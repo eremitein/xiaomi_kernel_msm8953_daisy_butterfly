@@ -7,6 +7,7 @@
  *
  * Copyright (C) 2002 David S. Miller (davem@redhat.com)
  * Copyright (C) 2006-2009 Patrick McHardy <kaber@trash.net>
+ * Copyright (C) 2018 XiaoMi, Inc.
  *
  */
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
@@ -478,6 +479,28 @@ static int mark_source_chains(const struct xt_table_info *newinfo,
 		duprintf("Finished chain %u\n", hook);
 	}
 	return 1;
+}
+
+static inline int check_entry(const struct arpt_entry *e)
+{
+	long size_of_base_struct = e->elems - (const unsigned char *)e;
+	const struct xt_entry_target *t;
+
+	/* target start is within the ip/ip6/arpt_entry struct */
+	if (e->target_offset < size_of_base_struct)
+		return -EINVAL;
+
+	if (!arp_checkentry(&e->arp))
+		return -EINVAL;
+
+	if (e->target_offset + sizeof(struct xt_entry_target) > e->next_offset)
+		return -EINVAL;
+
+	t = arpt_get_target_c(e);
+	if (e->target_offset + t->u.target_size > e->next_offset)
+		return -EINVAL;
+
+	return 0;
 }
 
 static inline int check_target(struct arpt_entry *e, const char *name)

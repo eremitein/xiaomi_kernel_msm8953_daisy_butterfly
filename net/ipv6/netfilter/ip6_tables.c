@@ -4,6 +4,7 @@
  * Copyright (C) 1999 Paul `Rusty' Russell & Michael J. Neuling
  * Copyright (C) 2000-2005 Netfilter Core Team <coreteam@netfilter.org>
  * Copyright (c) 2006-2010 Patrick McHardy <kaber@trash.net>
+ * Copyright (C) 2018 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -581,6 +582,30 @@ static void cleanup_match(struct xt_entry_match *m, struct net *net)
 	if (par.match->destroy != NULL)
 		par.match->destroy(&par);
 	module_put(par.match->me);
+}
+
+static int
+check_entry(const struct ip6t_entry *e)
+{
+	long size_of_base_struct = e->elems - (const unsigned char *)e;
+	const struct xt_entry_target *t;
+
+	/* target start is within the ip/ip6/arpt_entry struct */
+	if (e->target_offset < size_of_base_struct)
+		return -EINVAL;
+
+	if (!ip6_checkentry(&e->ipv6))
+		return -EINVAL;
+
+	if (e->target_offset + sizeof(struct xt_entry_target) >
+	    e->next_offset)
+		return -EINVAL;
+
+	t = ip6t_get_target_c(e);
+	if (e->target_offset + t->u.target_size > e->next_offset)
+		return -EINVAL;
+
+	return 0;
 }
 
 static int check_match(struct xt_entry_match *m, struct xt_mtchk_param *par)
