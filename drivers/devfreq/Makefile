@@ -10,6 +10,7 @@ obj-$(CONFIG_DEVFREQ_GOV_CPUFREQ)	+= governor_cpufreq.o
 obj-$(CONFIG_DEVFREQ_GOV_MSM_ADRENO_TZ)	+= governor_msm_adreno_tz.o
 obj-$(CONFIG_DEVFREQ_GOV_MSM_ADRENO_GUARDIAN)	+= governor_msm_adreno_guardian.o
 obj-$(CONFIG_DEVFREQ_GOV_MSM_ADRENO_BALANCED)	+= governor_msm_adreno_balanced.o
+obj-$(CONFIG_DEVFREQ_GOV_MSM_ADRENO_PLUS)	+= governor_msm_adreno_plus.o
 obj-$(CONFIG_ADRENO_REAL_IDLER)		+= adreno_idler.o
 adreno_idler-objs	:= adreno_real_idler.o
 obj-$(CONFIG_MSM_BIMC_BWMON)		+= bimc-bwmon.o
