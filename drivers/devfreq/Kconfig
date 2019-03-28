@@ -97,6 +97,15 @@ config DEVFREQ_GOV_MSM_ADRENO_BALANCED
     This governor is unlikely to be useful for other devices.
     'Balanced' version modified for good balance on mobile devices.
 
+config DEVFREQ_GOV_MSM_ADRENO_PLUS
+	tristate "MSM Adreno Trustzone Plus"
+	depends on MSM_KGSL && MSM_SCM
+	help
+	  Trustzone based governor for the Adreno GPU.
+	  Sets the frequency using a "on-demand" algorithm.
+	  This governor is unlikely to be useful for other devices.
+	  'Plus' version modified for good responsiveness on mobile devices.
+
 config ADRENO_REAL_IDLER
 	tristate "MSM Adreno Real Idler"
 	depends on DEVFREQ_GOV_MSM_ADRENO_TZ || DEVFREQ_GOV_MSM_ADRENO_PLUS
