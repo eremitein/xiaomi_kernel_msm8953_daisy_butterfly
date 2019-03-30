@@ -78,6 +78,14 @@ config IOSCHED_MAPLE
 		improve in performance. Maple also uses hooks for the state notifier driver
 		to increase expirations when power is suspended to decrease workload.
 
+config IOSCHED_TRIPNDROID
+	tristate "TripNDroid I/O scheduler"
+	default y
+	---help---
+		The TripNDroid IO Scheduler is based on noop, deadline and vr
+		it uses deadlines to ensure some fairness. The scheduler is build
+		to keep a minimum overhead. It is mainly build for mobile devices.
+
 choice
 	prompt "Default I/O scheduler"
 	default DEFAULT_CFQ
@@ -100,6 +108,9 @@ choice
 	config DEFAULT_MAPLE
 			bool "Maple" if IOSCHED_MAPLE=y
 
+	config DEFAULT_TRIPNDROID
+		bool "TripNDroid" if IOSCHED_TRIPNDROID=y
+
 endchoice
 
 config DEFAULT_IOSCHED
@@ -109,6 +120,7 @@ config DEFAULT_IOSCHED
 	default "noop" if DEFAULT_NOOP
 	default "bfq" if DEFAULT_BFQ
 	default "maple" if DEFAULT_MAPLE
+	default "tripndroid" if DEFAULT_TRIPNDROID
 
 endmenu
 
