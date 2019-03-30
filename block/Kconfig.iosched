@@ -86,6 +86,14 @@ config IOSCHED_TRIPNDROID
 		it uses deadlines to ensure some fairness. The scheduler is build
 		to keep a minimum overhead. It is mainly build for mobile devices.
 
+config IOSCHED_FIOPS
+	tristate "IOPS based I/O scheduler"
+	default y
+	---help---
+		This is an IOPS based I/O scheduler. It will try to distribute
+		IOPS equally among all processes in the system. It's mainly for
+		Flash based storage.
+
 choice
 	prompt "Default I/O scheduler"
 	default DEFAULT_CFQ
@@ -111,6 +119,9 @@ choice
 	config DEFAULT_TRIPNDROID
 		bool "TripNDroid" if IOSCHED_TRIPNDROID=y
 
+	config DEFAULT_FIOPS
+		bool "FIOPS" if IOSCHED_FIOPS=y
+
 endchoice
 
 config DEFAULT_IOSCHED
@@ -121,6 +132,7 @@ config DEFAULT_IOSCHED
 	default "bfq" if DEFAULT_BFQ
 	default "maple" if DEFAULT_MAPLE
 	default "tripndroid" if DEFAULT_TRIPNDROID
+	default "fiops" if DEFAULT_FIOPS
 
 endmenu
 
