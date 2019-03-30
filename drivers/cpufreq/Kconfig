@@ -152,6 +152,12 @@ config CPU_FREQ_DEFAULT_GOV_LIONHEART
 	help
 		Use the CPUFreq governor 'lionheart' as default.
 
+config CPU_FREQ_DEFAULT_GOV_DARKNESS
+	bool "darkness"
+	select CPU_FREQ_GOV_DARKNESS
+	help
+		Use the CPUFreq governor 'darkness' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -281,6 +287,14 @@ config CPU_FREQ_GOV_LIONHEART
 	default y
 	help
 		'Lionheart' is a brave and agile conservative-based governor.
+
+config CPU_FREQ_GOV_DARKNESS
+	tristate "'darkness' cpufreq governor"
+	depends on CPU_FREQ
+	select CPU_FREQ_GOV_COMMON
+	default y
+	help
+		A dynamic cpufreq governor Darkness v7.0.
 
 config CPU_FREQ_GOV_SCHED
 	bool "'sched' cpufreq governor"
