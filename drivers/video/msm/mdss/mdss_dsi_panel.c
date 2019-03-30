@@ -24,6 +24,7 @@
 #include <linux/qpnp/pwm.h>
 #include <linux/err.h>
 #include <linux/string.h>
+#include <linux/display_state.h>
 
 #include "mdss_dsi.h"
 #include "mdss_debug.h"
@@ -47,6 +48,13 @@ int LCM_effect[4] = {0x2,0xf0,0xf00,0xf000};
 int LCM_effect[3] = {0x2,0xf0,0xf00};
 #endif
 DEFINE_LED_TRIGGER(bl_led_trigger);
+
+bool display_on = true;
+
+bool is_display_on()
+{
+	return display_on;
+}
 
 void mdss_dsi_panel_pwm_cfg(struct mdss_dsi_ctrl_pdata *ctrl)
 {
@@ -918,6 +926,8 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 		return -EINVAL;
 	}
 
+	display_on = true;
+
 	pinfo = &pdata->panel_info;
 	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
@@ -1181,6 +1191,9 @@ end:
 	/* clear idle state */
 	ctrl->idle = false;
 	pr_debug("%s:-\n", __func__);
+
+	display_on = false;
+
 	return 0;
 }
 
