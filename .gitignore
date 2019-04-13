@@ -96,5 +96,12 @@ x509.genkey
 # Kconfig presets
 all.config
 
-# fetched Android config fragments
-android/configs/android-*.cfg
+# dev env 
+out
+AnyKernel2
+kernel.log
+daisy-stock*sh
+stock
+*.rej
+*.a
+
