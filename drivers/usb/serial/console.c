@@ -2,7 +2,6 @@
  * USB Serial Console driver
  *
  * Copyright (C) 2001 - 2002 Greg Kroah-Hartman (greg@kroah.com)
- * Copyright (C) 2018 XiaoMi, Inc.
  *
  *	This program is free software; you can redistribute it and/or
  *	modify it under the terms of the GNU General Public License version
@@ -82,7 +81,7 @@ static int usb_console_setup(struct console *co, char *options)
 		if (*s)
 			doflow = (*s++ == 'r');
 	}
-
+	
 	/* Sane default */
 	if (baud == 0)
 		baud = 9600;
@@ -304,3 +303,4 @@ void usb_serial_console_exit(void)
 		usbcons_info.port = NULL;
 	}
 }
+
