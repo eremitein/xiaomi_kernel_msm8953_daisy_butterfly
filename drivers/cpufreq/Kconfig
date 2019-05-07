@@ -222,6 +222,15 @@ config CPU_FREQ_DEFAULT_GOV_CONSERVATIVEX
 	help
 	  Use the CPUFreq governor 'conservativex' as default.
 
+config CPU_FREQ_DEFAULT_GOV_INTERACTIVEX
+	bool "interactivex"
+	select CPU_FREQ_GOV_INTERACTIVEX
+	help
+	  Use the CPUFreq governor 'interactivex' as default. This allows
+	  you to get a full dynamic cpu frequency capable system by simply
+	  loading your cpufreq low-level hardware driver, using the
+	  'interactivex' governor for latency-sensitive workloads.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -443,6 +452,16 @@ config CPU_FREQ_GOV_CONSERVATIVEX
 	help
 	  'conservativex' - A less aggressive version of
 		the conservativex governor (higher performance).
+
+	  If in doubt, say N.
+
+config CPU_FREQ_GOV_INTERACTIVEX
+	tristate "'interactivex' cpufreq policy governor"
+	depends on CPU_FREQ
+	default y
+	help
+	  'interactivex' - This driver adds a dynamic cpufreq policy governor
+	  designed for latency-sensitive workloads.
 
 	  If in doubt, say N.
 
