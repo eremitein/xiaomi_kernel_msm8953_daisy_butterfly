@@ -231,6 +231,18 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVEX
 	  loading your cpufreq low-level hardware driver, using the
 	  'interactivex' governor for latency-sensitive workloads.
 
+config CPU_FREQ_DEFAULT_GOV_ONDEMANDX
+	bool "ondemandx"
+	select CPU_FREQ_GOV_ONDEMANDX
+	select CPU_FREQ_GOV_PERFORMANCE
+	help
+	  Use the CPUFreq governor 'ondemandx' as default. This allows
+	  you to get a full dynamic frequency capable system by simply
+	  loading your cpufreq low-level hardware driver.
+	  Be aware that not all cpufreq drivers support the ondemandx
+	  governor. If unsure have a look at the help section of the
+	  driver. Fallback governor will be the performance governor.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -462,6 +474,23 @@ config CPU_FREQ_GOV_INTERACTIVEX
 	help
 	  'interactivex' - This driver adds a dynamic cpufreq policy governor
 	  designed for latency-sensitive workloads.
+
+	  If in doubt, say N.
+
+config CPU_FREQ_GOV_ONDEMANDX
+	tristate "'ondemandx' cpufreq policy governor"
+	select CPU_FREQ_GOV_COMMON
+	default y
+	help
+	  'ondemandx' - This driver adds a dynamic cpufreq policy governor.
+	  The governor does a periodic polling and 
+	  changes frequency based on the CPU utilization.
+	  The support for this governor depends on CPU capability to
+	  do fast frequency switching (i.e, very low latency frequency
+	  transitions). 
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called cpufreq_ondemandx.
 
 	  If in doubt, say N.
 
