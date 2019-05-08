@@ -26,6 +26,7 @@ obj-$(CONFIG_CPU_FREQ_GOV_CONSERVATIVEX)	+= cpufreq_conservativex.o
 obj-$(CONFIG_CPU_FREQ_GOV_INTERACTIVEX)	+= cpufreq_interactivex.o
 obj-$(CONFIG_CPU_FREQ_GOV_ONDEMANDX)	+= cpufreq_ondemandx.o
 obj-$(CONFIG_CPU_FREQ_GOV_BIOSHOCK)	+= cpufreq_bioshock.o
+obj-$(CONFIG_CPU_FREQ_GOV_DARKNESSV5)	+= cpufreq_darknessv5.o
 obj-$(CONFIG_CPU_FREQ_GOV_COMMON)		+= cpufreq_governor.o
 obj-$(CONFIG_CPU_BOOST)			+= cpu-boost.o
 

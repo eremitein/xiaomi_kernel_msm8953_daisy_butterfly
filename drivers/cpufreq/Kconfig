@@ -249,6 +249,12 @@ config CPU_FREQ_DEFAULT_GOV_BIOSHOCK
 	help
 	  Use the CPUFreq governor 'bioshock' as default.
 
+config CPU_FREQ_DEFAULT_GOV_DARKNESSV5
+	bool "darknessv5"
+	select CPU_FREQ_GOV_DARKNESSV5
+	help
+	  Use the CPUFreq governor 'darknessv5' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -506,6 +512,15 @@ config CPU_FREQ_GOV_BIOSHOCK
 	default y
 	help
 	  'bioshock' - The Infmous conservative-based governor.
+
+	  If in doubt, say N.
+
+config CPU_FREQ_GOV_DARKNESSV5
+	tristate "'darknessv5' cpufreq governor"
+	depends on CPU_FREQ
+	default y
+	help
+	  'darknessv5' - A dynamic cpufreq governor by Alucard24@XDA.
 
 	  If in doubt, say N.
 
