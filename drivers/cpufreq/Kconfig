@@ -285,6 +285,12 @@ config CPU_FREQ_DEFAULT_GOV_HYPER
 	help
 	  Use the CPUFreq governor 'hyper' as default.
 
+config CPU_FREQ_DEFAULT_GOV_DESPAIR
+	bool "despair"
+	select CPU_FREQ_GOV_DESPAIR
+	help
+	  Use the CPUFreq governor 'despair' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -606,6 +612,16 @@ config CPU_FREQ_GOV_HYPER
 	default y
 	help
 	 'hyper' - A tweaked "ondemand" based smart and smooth optimized governor.
+
+	 If in doubt, say N.
+
+config CPU_FREQ_GOV_DESPAIR
+	tristate "'despair' cpufreq governor"
+	depends on CPU_FREQ
+	default y
+	help
+	 'despair' - A dynamic cpufreq governor for low Latency Frequency Transition 
+	 capable processors. Optimised for use in a battery environment.
 
 	 If in doubt, say N.
 
