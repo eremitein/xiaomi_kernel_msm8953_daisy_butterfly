@@ -291,6 +291,12 @@ config CPU_FREQ_DEFAULT_GOV_DESPAIR
 	help
 	  Use the CPUFreq governor 'despair' as default.
 
+config CPU_FREQ_DEFAULT_GOV_BARRY_ALLEN
+	bool "barry_allen"
+	select CPU_FREQ_GOV_BARRY_ALLEN
+	help
+	  Use the CPUFreq governor 'barry_allen' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -624,6 +630,23 @@ config CPU_FREQ_GOV_DESPAIR
 	 capable processors. Optimised for use in a battery environment.
 
 	 If in doubt, say N.
+
+config CPU_FREQ_GOV_BARRY_ALLEN
+	tristate "'barry_allen' cpufreq policy governor"
+	depends on CPU_FREQ
+	default y
+	help
+	  'barry_allen' - This driver adds a dynamic cpufreq policy governor
+	  designed for latency-sensitive workloads.
+
+	  This governor attempts to reduce the latency of clock
+	  increases so that the system is more responsive to
+	  barry_allen workloads.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called cpufreq_barry_allen.
+
+	  If in doubt, say N.
 
 config CPU_FREQ_GOV_SCHED
 	bool "'sched' cpufreq governor"
