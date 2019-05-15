@@ -665,7 +665,7 @@ static int goodix_fb_state_chg_callback(struct notifier_block *nb,
 	char msg = 0;
 
 
-	printk("SXF Enter %s val = %d \n ",__func__,(int)val);
+	pr_err("SXF Enter %s val = %d \n ",__func__,(int)val);
 	if (val != FB_EVENT_BLANK)
 		return 0;
 	pr_info("[info] %s go to the goodix_fb_state_chg_callback value = %d\n",
@@ -675,7 +675,7 @@ static int goodix_fb_state_chg_callback(struct notifier_block *nb,
 
 	if (evdata && evdata->data && val == FB_EVENT_BLANK && gf_dev) {
 		blank = *(int *)(evdata->data);
-		printk("SXF_blank = %d\n",blank);
+		pr_err("SXF_blank = %d\n",blank);
 		switch (blank) {
 		case FB_BLANK_POWERDOWN:
 			if (gf_dev->device_available == 1) {
@@ -708,7 +708,7 @@ static int goodix_fb_state_chg_callback(struct notifier_block *nb,
 			break;
 		}
 	}
-	printk("SXF Exit %s\n ",__func__);
+	pr_err("SXF Exit %s\n ",__func__);
 	return NOTIFY_OK;
 }
 
