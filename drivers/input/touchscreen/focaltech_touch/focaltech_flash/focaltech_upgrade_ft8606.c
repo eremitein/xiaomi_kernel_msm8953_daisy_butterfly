@@ -107,7 +107,8 @@ static int fts_ctpm_get_vendor_id_flash(struct i2c_client *client,
 	}
 
 	/*check run in pramboot or not!
-	 *if not rum in pramboot, cannot upgrade*/
+	 *if not rum in pramboot, cannot upgrade
+	 */
 	inpram = fts_ctpm_check_run_state(client, FTS_RUN_IN_PRAM);
 	if (!inpram) {
 		FTS_ERROR("[UPGRADE]: not run in pram, upgrade fail!!");
@@ -327,7 +328,8 @@ static int fts_ctpm_write_app(struct i2c_client *client,
 	FTS_FUNC_ENTER();
 
 	/*check run in pramboot or not!
-	 *if not rum in pramboot, can not upgrade*/
+	 *if not rum in pramboot, can not upgrade
+	 */
 	inpram = fts_ctpm_check_run_state(client, FTS_RUN_IN_PRAM);
 	if (!inpram) {
 		FTS_ERROR("[UPGRADE]: not run in pram, upgrade fail!!");

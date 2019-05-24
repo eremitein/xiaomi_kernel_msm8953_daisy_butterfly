@@ -771,7 +771,7 @@ static int fts_ctpm_fw_upgrade_with_app_bin_file(struct i2c_client *client,
 	}
 
 	pbt_buf = kmalloc(fwsize + 1, GFP_KERNEL);
-	if (NULL == pbt_buf) {
+	if (pbt_buf == NULL) {
 		FTS_ERROR(" malloc pbt_buf failed ");
 		goto ERROR_BIN;
 	}

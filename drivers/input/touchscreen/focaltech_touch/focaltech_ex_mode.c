@@ -56,6 +56,17 @@ static struct fts_mode_flag g_fts_mode_flag;
 /*****************************************************************************
 * 5.Global variable or extern global variabls/functions
 *****************************************************************************/
+int  fts_enter_glove_mode(struct i2c_client *client, int mode);
+int  fts_glove_init(struct i2c_client *client);
+int  fts_glove_exit(struct i2c_client *client);
+
+int  fts_enter_cover_mode(struct i2c_client *client, int mode);
+int  fts_cover_init(struct i2c_client *client);
+int  fts_cover_exit(struct i2c_client *client);
+
+int  fts_enter_charger_mode(struct i2c_client *client, int mode);
+int  fts_charger_init(struct i2c_client *client);
+int  fts_charger_exit(struct i2c_client *client);
 
 /*****************************************************************************
 * 6.Static function prototypes
@@ -128,7 +139,7 @@ int fts_enter_glove_mode(struct i2c_client *client, int mode)
 *   write example:echo 01 > fts_touch_glove_mode ---write glove mode to 01
 *
 */
-static DEVICE_ATTR(fts_glove_mode, S_IRUGO|S_IWUSR,
+static DEVICE_ATTR(fts_glove_mode, 0644,
 		fts_touch_glove_show, fts_touch_glove_store);
 
 #endif
@@ -200,7 +211,7 @@ int  fts_enter_cover_mode(struct i2c_client *client, int mode)
 *   write example:echo 01 > fts_touch_cover_mode ---write cover mode to 01
 *
 */
-static DEVICE_ATTR(fts_cover_mode, S_IRUGO|S_IWUSR,
+static DEVICE_ATTR(fts_cover_mode, 0644,
 		fts_touch_cover_show, fts_touch_cover_store);
 
 #endif
@@ -272,7 +283,7 @@ int  fts_enter_charger_mode(struct i2c_client *client, int mode)
 *   write example:echo 01 > fts_touch_charger_mode ---write charger mode to 01
 *
 */
-static DEVICE_ATTR(fts_charger_mode, S_IRUGO|S_IWUSR,
+static DEVICE_ATTR(fts_charger_mode, 0644,
 		fts_touch_charger_show, fts_touch_charger_store);
 
 #endif
@@ -306,7 +317,7 @@ int fts_ex_mode_init(struct i2c_client *client)
 	g_fts_mode_flag.fts_charger_mode_flag = false;
 
 	err = sysfs_create_group(&client->dev.kobj, &fts_touch_mode_group);
-	if (0 != err) {
+	if (err != 0) {
 		FTS_ERROR("[Mode]create sysfs failed.");
 		sysfs_remove_group(&client->dev.kobj, &fts_touch_mode_group);
 		return -EIO;
