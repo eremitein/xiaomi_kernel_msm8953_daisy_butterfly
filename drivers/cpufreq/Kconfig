@@ -297,6 +297,12 @@ config CPU_FREQ_DEFAULT_GOV_BARRY_ALLEN
 	help
 	  Use the CPUFreq governor 'barry_allen' as default.
 
+config CPU_FREQ_DEFAULT_GOV_XPERIENCE
+	bool "xperience"
+	select CPU_FREQ_GOV_XPERIENCE
+	help
+	  Use the CPUFreq governor 'xperience' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -647,6 +653,15 @@ config CPU_FREQ_GOV_BARRY_ALLEN
 	  module will be called cpufreq_barry_allen.
 
 	  If in doubt, say N.
+
+config CPU_FREQ_GOV_XPERIENCE
+	tristate "'xperience' cpufreq governor"
+	depends on CPU_FREQ
+	default y
+	help
+		'XPerience' - a "powered and smart" governor.
+
+		If in doubt, say N.
 
 config CPU_FREQ_GOV_SCHED
 	bool "'sched' cpufreq governor"
