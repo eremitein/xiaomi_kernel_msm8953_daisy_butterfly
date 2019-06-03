@@ -303,6 +303,12 @@ config CPU_FREQ_DEFAULT_GOV_XPERIENCE
 	help
 	  Use the CPUFreq governor 'xperience' as default.
 
+config CPU_FREQ_DEFAULT_GOV_ALESSA
+	bool "alessa"
+	select CPU_FREQ_GOV_ALESSA
+	help
+		Use the CPUFreq governor 'alessa' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -660,6 +666,17 @@ config CPU_FREQ_GOV_XPERIENCE
 	default y
 	help
 		'XPerience' - a "powered and smart" governor.
+
+		If in doubt, say N.
+
+config CPU_FREQ_GOV_ALESSA
+	tristate "'alessa' cpufreq governor"
+	depends on CPU_FREQ
+	default y
+	help
+		'alessa' - This driver adds a dynamic cpufreq policy governor.
+		The governor does a periodic polling and changes frequency based on the
+		CPU utilization.
 
 		If in doubt, say N.
 
