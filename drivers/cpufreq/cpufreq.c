@@ -2204,6 +2204,8 @@ static int __cpufreq_governor(struct cpufreq_policy *policy,
 int cpufreq_register_governor(struct cpufreq_governor *governor)
 {
 	int err;
+        struct cpufreq_governor *t, *found;
+        struct list_head *last;
 
 	if (!governor)
 		return -EINVAL;
@@ -2215,9 +2217,21 @@ int cpufreq_register_governor(struct cpufreq_governor *governor)
 
 	governor->initialized = 0;
 	err = -EBUSY;
-	if (__find_governor(governor->name) == NULL) {
+        last=&cpufreq_governor_list;
+        found=NULL;
+	list_for_each_entry(t, &cpufreq_governor_list, governor_list){
+		if (0 <= strnicmp(governor->name,  t->name, CPUFREQ_NAME_LEN))
+                    last=&t->governor_list;
+
+		if (!strnicmp(governor->name, t->name, CPUFREQ_NAME_LEN)){
+                        found=t;
+			break;
+                }
+        }
+
+	if (found == NULL) {
 		err = 0;
-		list_add(&governor->governor_list, &cpufreq_governor_list);
+		list_add(&governor->governor_list, last);
 	}
 
 	mutex_unlock(&cpufreq_governor_mutex);
