@@ -4078,7 +4078,12 @@ CONFIG_FUSE_FS=y
 #
 # Caches
 #
-# CONFIG_FSCACHE is not set
+CONFIG_FSCACHE=y
+# CONFIG_FSCACHE_STATS is not set
+# CONFIG_FSCACHE_HISTOGRAM is not set
+# CONFIG_FSCACHE_DEBUG is not set
+# CONFIG_FSCACHE_OBJECT_LIST is not set
+# CONFIG_CACHEFILES is not set
 
 #
 # CD-ROM/DVD Filesystems
@@ -4177,7 +4182,15 @@ CONFIG_NETWORK_FILESYSTEMS=y
 # CONFIG_NFS_FS is not set
 # CONFIG_NFSD is not set
 # CONFIG_CEPH_FS is not set
-# CONFIG_CIFS is not set
+CONFIG_CIFS=y
+# CONFIG_CIFS_STATS is not set
+# CONFIG_CIFS_WEAK_PW_HASH is not set
+# CONFIG_CIFS_UPCALL is not set
+# CONFIG_CIFS_XATTR is not set
+# CONFIG_CIFS_DEBUG is not set
+# CONFIG_CIFS_DFS_UPCALL is not set
+CONFIG_CIFS_SMB2=y
+# CONFIG_CIFS_FSCACHE is not set
 # CONFIG_NCP_FS is not set
 # CONFIG_CODA_FS is not set
 # CONFIG_AFS_FS is not set
@@ -4509,7 +4522,7 @@ CONFIG_CRYPTO_XTS=y
 #
 # Hash modes
 #
-# CONFIG_CRYPTO_CMAC is not set
+CONFIG_CRYPTO_CMAC=y
 CONFIG_CRYPTO_HMAC=y
 CONFIG_CRYPTO_XCBC=y
 # CONFIG_CRYPTO_VMAC is not set
