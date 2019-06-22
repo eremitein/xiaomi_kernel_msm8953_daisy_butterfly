@@ -316,6 +316,13 @@ config CPU_FREQ_DEFAULT_GOV_CHILL
 	help
 		Use the CPUFreq governor 'chill' as default.
 
+config CPU_FREQ_DEFAULT_GOV_ONDEMANDPLUS
+	bool "ondemandplus"
+	select CPU_FREQ_GOV_ONDEMANDPLUS
+	select CPU_FREQ_GOV_PERFORMANCE
+	help
+	  Use the CPUFreq governor 'ondemandplus' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -697,6 +704,24 @@ config CPU_FREQ_GOV_CHILL
 		that go into suspended or display off states often.
 
 		If in doubt, say N.
+
+config CPU_FREQ_GOV_ONDEMANDPLUS
+	tristate "'ondemandplus' cpufreq policy governor"
+	depends on CPU_FREQ
+	select CPU_FREQ_TABLE
+	select CPU_FREQ_GOV_COMMON
+	default y
+	help
+	  'ondemandplus' - This driver adds a dynamic cpufreq policy
+	  governor. The governor does a periodic polling and
+	  changes frequency based on the CPU utilization.
+	  The support for this governor depends on CPU capability to
+	  do fast frequency switching (i.e, very low latency frequency
+	  transitions).
+	  To compile this driver as a module, choose M here: the
+	  module will be called cpufreq_ondemandplus.
+
+	  If in doubt, say N.
 
 config CPU_FREQ_GOV_SCHED
 	bool "'sched' cpufreq governor"
