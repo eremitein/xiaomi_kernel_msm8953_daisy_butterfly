@@ -323,6 +323,12 @@ config CPU_FREQ_DEFAULT_GOV_ONDEMANDPLUS
 	help
 	  Use the CPUFreq governor 'ondemandplus' as default.
 
+config CPU_FREQ_DEFAULT_GOV_IRONACTIVE
+	bool "ironactive"
+	select CPU_FREQ_GOV_IRONACTIVE
+	help
+	  Use the CPUFreq governor 'ironactive' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -720,6 +726,20 @@ config CPU_FREQ_GOV_ONDEMANDPLUS
 	  transitions).
 	  To compile this driver as a module, choose M here: the
 	  module will be called cpufreq_ondemandplus.
+
+	  If in doubt, say N.
+
+config CPU_FREQ_GOV_IRONACTIVE
+	tristate "'ironactive' cpufreq policy governor"
+	depends on CPU_FREQ
+	default y
+	help
+	  'ironactive' - This driver adds a dynamic cpufreq policy governor
+	  designed for latency-sensitive workloads.
+
+	  This governor attempts to reduce the latency of clock
+	  increases so that the system is more responsive to
+	  interactive workloads.
 
 	  If in doubt, say N.
 
