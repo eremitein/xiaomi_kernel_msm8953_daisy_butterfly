@@ -129,6 +129,14 @@ config IOSCHED_SIOPLUS
 	  basic merging, trying to keep a minimum overhead. It is aimed
 	  mainly for aleatory access devices (eg: flash devices).
 
+config IOSCHED_FIFO
+	tristate "FIFO I/O scheduler"
+	default y
+	---help---
+	  Fifo is similar to no-op I/O scheduler and it's a minimal scheduler
+		that does basic merging and sorting.
+		From https://github.com/AndroidDeveloperAlliance/ZenKernel_TUNA/blob/master/block/fifo-iosched.c
+
 choice
 	prompt "Default I/O scheduler"
 	default DEFAULT_CFQ
@@ -169,6 +177,9 @@ choice
 	config DEFAULT_SIOPLUS
 		bool "SIOPLUS" if IOSCHED_SIOPLUS=y
 
+	config DEFAULT_FIFO
+		bool "fifo" if IOSCHED_FIFO=y
+
 endchoice
 
 config DEFAULT_IOSCHED
@@ -184,6 +195,7 @@ config DEFAULT_IOSCHED
 	default "sio" if DEFAULT_SIO
 	default "anxiety" if DEFAULT_ANXIETY
 	default "sioplus" if DEFAULT_SIOPLUS
+	default "fifo" if DEFAULT_FIFO
 
 endmenu
 
