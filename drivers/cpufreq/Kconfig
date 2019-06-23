@@ -335,6 +335,12 @@ config CPU_FREQ_DEFAULT_GOV_CULTIVATION
 	help
 		Use the CPUFreq governor 'cultivation' as default.
 
+config CPU_FREQ_DEFAULT_GOV_TRIPNDROID
+	bool "tripndroid"
+	select CPU_FREQ_GOV_TRIPNDROID
+	help
+		Use the CPUFreq governor 'tripndroid' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -755,6 +761,15 @@ config CPU_FREQ_GOV_CULTIVATION
 	default y
 	help
 	  'cultivation' - another tuned interactive with extra options
+
+config CPU_FREQ_GOV_TRIPNDROID
+	tristate "'tripndroid' cpufreq governor"
+	depends on CPU_FREQ
+	default y
+	help
+		Custom cpu governor designed specificly for multi cpu mobile devices.
+		Aiming at a balance between performance and battery lifetime, but it
+		hangs a little bit more towards performance at low latencys.
 
 config CPU_FREQ_GOV_SCHED
 	bool "'sched' cpufreq governor"
