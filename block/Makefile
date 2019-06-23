@@ -28,6 +28,7 @@ obj-$(CONFIG_IOSCHED_SIO)		+= sio-iosched.o
 obj-$(CONFIG_IOSCHED_ANXIETY)	+= anxiety-iosched.o
 obj-$(CONFIG_IOSCHED_SIOPLUS)	+= sioplus-iosched.o
 obj-$(CONFIG_IOSCHED_FIFO)	+= fifo-iosched.o
+obj-$(CONFIG_IOSCHED_VR)	+= vr-iosched.o
 
 obj-$(CONFIG_BLOCK_COMPAT)	+= compat_ioctl.o
 obj-$(CONFIG_BLK_CMDLINE_PARSER)	+= cmdline-parser.o
