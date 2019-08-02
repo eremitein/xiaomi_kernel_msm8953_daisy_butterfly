@@ -347,6 +347,12 @@ config CPU_FREQ_DEFAULT_GOV_NIGHTMARE
 	help
 		Use the CPUFreq governor 'nightmare' as default.
 
+config CPU_FREQ_DEFAULT_GOV_DANCEDANCE
+	bool "dancedance"
+	select CPU_FREQ_GOV_DANCEDANCE
+	help
+		Use the CPUFreq governor 'dancedance' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SCHED
 	bool "sched"
 	select CPU_FREQ_GOV_INTERACTIVE
@@ -783,6 +789,17 @@ config CPU_FREQ_GOV_NIGHTMARE
 	default y
 	help
 		'nightmare' - A dynamic cpufreq governor v5.0 (SnapDragon) by Alucard24@XDA.
+
+		If in doubt, say N.
+
+config CPU_FREQ_GOV_DANCEDANCE
+	tristate "'dancedance' cpufreq governor"
+	depends on CPU_FREQ
+	default y
+	help
+		'dancedance' - A dynamic cpufreq governor for low Latency Frequency Transition
+		capable processors. Optimised for use in a battery environment.
+		Modified code based off conservative with a faster deep sleep rate.
 
 		If in doubt, say N.
 
