@@ -3,6 +3,8 @@
  *
  * Copyright (c) 2010-2016, Alucard24 <dmbaoh2@gmail.com>
  *
+ * 2019 Mod for 'butterfly@daisy' by Victor Bo <eremitein@xda/zerovoid@4pda>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
@@ -23,9 +25,7 @@
 #include <linux/kthread.h>
 #include <linux/slab.h>
 #include <asm/cputime.h>
-#ifdef CONFIG_STATE_NOTIFIER
-#include <linux/state_notifier.h>
-#endif
+#include <linux/display_state.h>
 
 struct cpufreq_darkness_policyinfo {
 	struct timer_list policy_timer;
@@ -69,9 +69,7 @@ struct cpufreq_darkness_tunables {
 	 * The sample rate of the timer used to increase frequency
 	 */
 	unsigned long timer_rate;
-#ifdef CONFIG_STATE_NOTIFIER
 	unsigned long timer_rate_prev;
-#endif
 	/*
 	 * Max additional time to wait in idle, beyond timer_rate, at speeds
 	 * above minimum before wakeup to reduce speed, or -1 if unnecessary.
@@ -263,16 +261,17 @@ static void cpufreq_darkness_timer(unsigned long data)
 {
 	bool ignore = false;
 	struct cpufreq_darkness_policyinfo *ppol = per_cpu(polinfo, data);
-#ifdef CONFIG_STATE_NOTIFIER
 	struct cpufreq_darkness_tunables *tunables =
 		ppol->policy->governor_data;
-#endif
 	struct cpufreq_darkness_cpuinfo *pcpu;
 	unsigned int new_freq;
 	unsigned int max_load = 0, tmpload;
 	unsigned long flags;
 	unsigned long max_cpu;
 	int i, fcpu;
+
+	/* create display state boolean */
+	bool display_on = is_display_on();
 
 	if (!down_read_trylock(&ppol->enable_sem))
 		return;
@@ -284,18 +283,16 @@ static void cpufreq_darkness_timer(unsigned long data)
 	fcpu = cpumask_first(ppol->policy->related_cpus);
 	ppol->last_evaluated_jiffy = get_jiffies_64();
 
-#ifdef CONFIG_STATE_NOTIFIER
-	if (!state_suspended &&
+	if (display_on &&
 		tunables->timer_rate != tunables->timer_rate_prev)
 		tunables->timer_rate = tunables->timer_rate_prev;
-	else if (state_suspended &&
+	else if (!display_on &&
 		tunables->timer_rate != DEFAULT_TIMER_RATE_SUSP) {
 		tunables->timer_rate_prev = tunables->timer_rate;
 		tunables->timer_rate
 			= max(tunables->timer_rate,
 				DEFAULT_TIMER_RATE_SUSP);
 	}
-#endif
 
 	max_cpu = cpumask_first(ppol->policy->cpus);
 	for_each_cpu(i, ppol->policy->cpus) {
@@ -461,9 +458,7 @@ static ssize_t store_timer_rate(struct cpufreq_darkness_tunables *tunables,
 		pr_warn("timer_rate not aligned to jiffy. Rounded up to %lu\n",
 			val_round);
 	tunables->timer_rate = val_round;
-#ifdef CONFIG_STATE_NOTIFIER
 	tunables->timer_rate_prev = val_round;
-#endif
 
 	return count;
 }
@@ -616,9 +611,7 @@ static struct cpufreq_darkness_tunables *alloc_tunable(
 		return ERR_PTR(-ENOMEM);
 
 	tunables->timer_rate = DEFAULT_TIMER_RATE;
-#ifdef CONFIG_STATE_NOTIFIER
 	tunables->timer_rate_prev = DEFAULT_TIMER_RATE;
-#endif
 	tunables->timer_slack_val = DEFAULT_TIMER_SLACK;
 
 	return tunables;
